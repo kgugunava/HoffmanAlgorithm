@@ -3,10 +3,24 @@
 #include <algorithm>
 #include <map>
 
+vector<Node> allNodes;
+
 using namespace std;
 
 bool comp(Node x, Node y) {
     return x.number_of_freq() > y.number_of_freq();
+}
+
+void inorderWalking(Node* root) {
+
+    if(root == nullptr)
+        return;
+
+    inorderWalking(root->getLeft());
+    if(root->number_of_value() != '\0')
+        cout << root->number_of_value() << " - " << root->number_of_freq() << "\n";
+    inorderWalking(root->getRight());
+
 }
 
 void HoffmanTree::buildHoffmanTree(const char* filename) {
@@ -27,7 +41,7 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
         this->nodes.push_back(newNode);
     }
     sort(nodes.begin(), nodes.end(), comp);
-    vector<Node> allNodes;
+
     while (nodes.size() != 1) {
         Node newNode;
         newNode.setFreq(nodes.back().number_of_freq() + nodes[nodes.size() - 2].number_of_freq()); // sum of 2 prev nodes
@@ -40,4 +54,18 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
         nodes.push_back(newNode);
         sort(nodes.begin(), nodes.end(), comp);
     }
+
+    root = &nodes[0];
+
+    inorderWalking(root);
+
+}
+
+
+
+void HoffmanTree::inorderWalk() {
+
+    ;
+
+
 }
