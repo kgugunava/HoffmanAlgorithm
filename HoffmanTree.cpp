@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <fstream>
 
 using namespace std;
 
@@ -10,18 +11,20 @@ bool comp(Node x, Node y) {
 }
 
 void HoffmanTree::buildHoffmanTree(const char* filename) {
-
-    FILE* fr = fopen(filename, "rb");
-    if (!fr)
-        return;
-    fseek(fr, 0L, SEEK_END);
-    long length = ftell(fr);
-    fseek(fr, 0, SEEK_SET);
-
+    
     map<char, int> freqOfSymbol;
-    for (int i = 0; i < length; i++) {
-        freqOfSymbol[fgetc(fr)] += 1;
+    string line;
+    ifstream in(filename);
+    if (in.is_open()) {
+        while(getline(in, line)) {
+            for (int i = 0; i < line.size(); i++) {
+                cout << line[i] << "\n";
+                freqOfSymbol[line[i]]++;
+            }
+        }
     }
+    in.close();
+
     for (auto x : freqOfSymbol) {
         Node newNode(x.second, x.first);
         this->nodes.push_back(newNode);
@@ -40,4 +43,5 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
         nodes.push_back(newNode);
         sort(nodes.begin(), nodes.end(), comp);
     }
+    cout << nodes[0].getLeft()->number_of_freq() << " ";
 }
