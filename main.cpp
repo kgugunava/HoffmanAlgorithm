@@ -1,12 +1,12 @@
 #include <iostream>
+#include "HoffmanTree.h"
 
 using std::cout;
 using std::cin;
 
 int main() {
-
-    //created nodes
-
+    HoffmanTree hTree;
+    hTree.buildHoffmanTree("input.txt");
 
     return 0;
 }
