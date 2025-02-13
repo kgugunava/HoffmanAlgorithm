@@ -10,6 +10,9 @@ using namespace std;
 class HoffmanTree {
 public:
     void buildHoffmanTree(const char* text);
+
+    void inorderWalk();
+
 private:
     vector<Node> nodes;
     Node* root = nullptr;

@@ -2,7 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
-#include <fstream>
+
+vector<Node> allNodes;
 
 using namespace std;
 
@@ -10,27 +11,37 @@ bool comp(Node x, Node y) {
     return x.number_of_freq() > y.number_of_freq();
 }
 
-void HoffmanTree::buildHoffmanTree(const char* filename) {
-    
-    map<char, int> freqOfSymbol;
-    string line;
-    ifstream in(filename);
-    if (in.is_open()) {
-        while(getline(in, line)) {
-            for (int i = 0; i < line.size(); i++) {
-                cout << line[i] << "\n";
-                freqOfSymbol[line[i]]++;
-            }
-        }
-    }
-    in.close();
+void inorderWalking(Node* root) {
 
+    if(root == nullptr)
+        return;
+
+    inorderWalking(root->getLeft());
+    if(root->number_of_value() != '\0')
+        cout << root->number_of_value() << " - " << root->number_of_freq() << "\n";
+    inorderWalking(root->getRight());
+
+}
+
+void HoffmanTree::buildHoffmanTree(const char* filename) {
+
+    FILE* fr = fopen(filename, "rb");
+    if (!fr)
+        return;
+    fseek(fr, 0L, SEEK_END);
+    long length = ftell(fr);
+    fseek(fr, 0, SEEK_SET);
+
+    map<char, int> freqOfSymbol;
+    for (int i = 0; i < length; i++) {
+        freqOfSymbol[fgetc(fr)] += 1;
+    }
     for (auto x : freqOfSymbol) {
         Node newNode(x.second, x.first);
         this->nodes.push_back(newNode);
     }
     sort(nodes.begin(), nodes.end(), comp);
-    vector<Node> allNodes;
+
     while (nodes.size() != 1) {
         Node newNode;
         newNode.setFreq(nodes.back().number_of_freq() + nodes[nodes.size() - 2].number_of_freq()); // sum of 2 prev nodes
@@ -43,5 +54,18 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
         nodes.push_back(newNode);
         sort(nodes.begin(), nodes.end(), comp);
     }
-    cout << nodes[0].getLeft()->number_of_freq() << " ";
+
+    root = &nodes[0];
+
+    inorderWalking(root);
+
+}
+
+
+
+void HoffmanTree::inorderWalk() {
+
+    ;
+
+
 }
