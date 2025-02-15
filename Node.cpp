@@ -8,8 +8,9 @@ Node::Node() {
 	symb = '\0';
 	right = nullptr;
 	left = nullptr;
-	parent = nullptr;
+	//parent = nullptr;
 }
+
 
 void Node::add_number(unsigned char value) { // find necessary Node and its frequency += 1
 	this->freq++;
@@ -53,5 +54,7 @@ Node* Node::getRight() const
 
 Node::Node(int freq, unsigned char value) {
 	this->freq = freq;
-	symb = value;
+	this->symb = value;
+	this->right = nullptr;
+	this->left = nullptr;
 }

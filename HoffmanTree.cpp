@@ -4,6 +4,8 @@
 #include <map>
 
 vector<Node> allNodes;
+map<unsigned char, string> dict; // coding dictionary
+
 
 using namespace std;
 
@@ -11,15 +13,43 @@ bool comp(Node x, Node y) {
     return x.number_of_freq() > y.number_of_freq();
 }
 
-void inorderWalking(Node* root) {
+void inorderWalking(Node* root, string code) {
 
-    if(root == nullptr)
+    if(root->getLeft() == nullptr && root->getRight() == nullptr) { //Out Condition
+
+        if(root->number_of_value() != '\0') {
+
+            dict[root->number_of_value()] = code; // recording in map (if you comment this line, a program will compile successfully)
+
+            cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code <<"\n";
+        }
+
         return;
+    }
 
-    inorderWalking(root->getLeft());
-    if(root->number_of_value() != '\0')
-        cout << root->number_of_value() << " - " << root->number_of_freq() << "\n";
-    inorderWalking(root->getRight());
+    inorderWalking(root->getLeft(), code + "0");
+    inorderWalking(root->getRight(), code + "1");
+
+    /*
+    if(root == nullptr || root == NULL) {
+        return;
+    }
+
+
+
+    if(root->number_of_value() != '\0') {
+
+
+        //dict[root->number_of_value()] = new char[code.length()];
+        //dict[root->number_of_value()] = code;
+
+        cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code <<"\n";
+        //cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code <<"\n";
+    }
+
+    inorderWalking(root->getLeft(), code + "0");
+    inorderWalking(root->getRight(), code + "1");
+    */
 
 }
 
@@ -33,6 +63,7 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
     fseek(fr, 0, SEEK_SET);
 
     map<char, int> freqOfSymbol;
+
     for (int i = 0; i < length; i++) {
         freqOfSymbol[fgetc(fr)] += 1;
     }
@@ -57,7 +88,6 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
 
     root = &nodes[0];
 
-    inorderWalking(root);
 
 }
 
@@ -65,7 +95,8 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
 
 void HoffmanTree::inorderWalk() {
 
-    ;
+    inorderWalking(root, "");
 
+    cout << "--->" << dict['e'] << "\n";
 
 }
