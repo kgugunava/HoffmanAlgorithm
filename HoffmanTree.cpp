@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <fstream>
 
 vector<Node> allNodes;
 
@@ -25,17 +26,18 @@ void inorderWalking(Node* root) {
 
 void HoffmanTree::buildHoffmanTree(const char* filename) {
 
-    FILE* fr = fopen(filename, "rb");
-    if (!fr)
-        return;
-    fseek(fr, 0L, SEEK_END);
-    long length = ftell(fr);
-    fseek(fr, 0, SEEK_SET);
-
     map<char, int> freqOfSymbol;
-    for (int i = 0; i < length; i++) {
-        freqOfSymbol[fgetc(fr)] += 1;
+    string line;
+    ifstream in(filename);
+    if (in.is_open()) {
+        while(getline(in, line)) {
+            for (int i = 0; i < line.size(); i++) {
+                freqOfSymbol[line[i]]++;
+            }
+        }
     }
+    in.close();
+
     for (auto x : freqOfSymbol) {
         Node newNode(x.second, x.first);
         this->nodes.push_back(newNode);
@@ -58,7 +60,6 @@ void HoffmanTree::buildHoffmanTree(const char* filename) {
     root = &nodes[0];
 
     inorderWalking(root);
-
 }
 
 
