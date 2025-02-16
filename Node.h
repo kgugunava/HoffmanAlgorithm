@@ -1,36 +1,42 @@
+
+
 #ifndef Node_H
 #define Node_H
 
 class Node {
 public:
-	Node();
+	Node() {
+		char data = 0;
+		Node* left = nullptr;
+		Node* right = nullptr;
+		int freq = 0;
+	}
 
-	Node(int freq, unsigned char value);
+	Node(char value, int f) {
+		data = value;
+		freq = f;
+		Node* left = nullptr;
+		Node* right = nullptr;
+	}
 
-	void add_number(unsigned char value);
+	//геттеры
+	Node* getLeft()const{return left;}
+	Node* getRight()const{return right;}
+	int getData()const {return data;}
+	int getFreq()const{return freq;}
 
-	int number_of_freq() const;
-
-	char number_of_value() const;
-
-	void setParent(Node* node);
-
-	void setLeft(Node* node);
-
-	void setRight(Node* node);
-
-	void setFreq(int value);
-	Node* getLeft()const;
-	Node* getRight()const;
+	//сеттеры
+	void setLeft(Node* l){left = l;}
+	void setRight(Node* r){right = r;}
+	void setData(int d){data = d;}
+	void setFreq(int f){freq = f;}
 
 private:
-	Node* right;
-	Node* left;
-	Node* parent;
-	int freq;
-	unsigned char symb;
+	char data = 0;
+	Node* left = nullptr;
+	Node* right = nullptr;
+	int freq = 0;
 };
 
 
-
-#endif Node_H
+#endif //Node_H

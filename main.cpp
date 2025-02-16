@@ -8,7 +8,9 @@ int main() {
     HoffmanTree hTree;
     hTree.buildHoffmanTree("input.txt");
 
-    hTree.inorderWalk();
+    //cout << hTree.getTree().getLeft()->getLeft()->getLeft()->number_of_value() << "\n";
+
+    hTree.inorderWalk(hTree.getRoot(), "");
 
     return 0;
 }
