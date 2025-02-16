@@ -1,0 +1,7 @@
+hoffman/
+x64/
+*.filters
+*.user
+*.vcxproj
+*.sln
+.vs/
