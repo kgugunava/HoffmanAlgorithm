@@ -1,111 +1,93 @@
 #include "HoffmanTree.h"
+#include "Node.h"
 #include <iostream>
-#include <algorithm>
 #include <map>
-#include <fstream>
+#include <queue>
+
+#define BUFF_SIZE 256
 
 vector<Node> allNodes;
-map<unsigned char, string> dict; // coding dictionary
-map<char, int> freqOfSymbol; // frequency of every symbol in the text
+Node buff[BUFF_SIZE];
+int buffCount = 0;
 
+map<unsigned char, string> dict; // coding dictionary
 
 using namespace std;
 
-bool comp(Node x, Node y) {
-    return x.number_of_freq() > y.number_of_freq();
-}
 
-void inorderWalking(Node *root, string code) {
-    if (root->getLeft() == nullptr && root->getRight() == nullptr) {
-        //Out Condition
-        // if (root->number_of_value() != '\0') {
-            dict[root->number_of_value()] = code;
-            // recording in map (if you comment this line, a program will compile successfully)
+struct Comp {
+    bool operator()(const Node& a, const Node& b) {
+        return a.getFreq() > b.getFreq();
+    }
+};
 
-            cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code << "\n";
-        // }
+HoffmanTree::HoffmanTree(const char* filename) {
 
+    priority_queue<Node, vector<Node>, Comp>queue;
+
+
+    FILE* fr = fopen(filename, "rb");
+    if (!fr)
         return;
+
+    fseek(fr, 0L, SEEK_END);
+
+    long length = ftell(fr);
+
+    fseek(fr, 0, SEEK_SET);
+
+    // map_1
+    map<char, int> freqOfSymbol;
+
+    for (int i = 0; i < length; i++) {
+        freqOfSymbol[fgetc(fr)] += 1;
     }
 
-    inorderWalking(root->getLeft(), code + "0");
-    inorderWalking(root->getRight(), code + "1");
-
-    /*
-    if(root == nullptr || root == NULL) {
-        return;
-    }
-
-
-
-    if(root->number_of_value() != '\0') {
-
-
-        //dict[root->number_of_value()] = new char[code.length()];
-        //dict[root->number_of_value()] = code;
-
-        cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code <<"\n";
-        //cout << root->number_of_value() << " - " << root->number_of_freq() << " - " << code <<"\n";
-    }
-
-    inorderWalking(root->getLeft(), code + "0");
-    inorderWalking(root->getRight(), code + "1");
-    */
-}
-
-void HoffmanTree::buildHoffmanTree(const char *filename) {
-    string line;
-    ifstream in(filename);
-    if (in.is_open()) {
-        while (getline(in, line)) {
-            for (int i = 0; i < line.size(); i++) {
-                freqOfSymbol[line[i]]++;
-            }
-        }
-    }
-    in.close();
-
-    for (auto x: freqOfSymbol) {
-        Node newNode(x.second, x.first);
-        this->nodes.push_back(newNode);
-    }
-    sort(nodes.begin(), nodes.end(), comp);
-
-    while (nodes.size() != 1) {
+    for (auto x : freqOfSymbol) {
         Node newNode;
-        newNode.setFreq(nodes.back().number_of_freq() + nodes[nodes.size() - 2].number_of_freq());
-        // sum of 2 prev nodes
-        allNodes.push_back(nodes[nodes.size() - 2]);
-        allNodes.push_back(nodes.back());
-        newNode.setLeft(&allNodes[allNodes.size() - 2]);
-        newNode.setRight(&allNodes[allNodes.size() - 1]);
-        nodes.pop_back();
-        nodes.pop_back();
-        nodes.push_back(newNode);
-        sort(nodes.begin(), nodes.end(), comp);
+        newNode.setData(x.first);
+        newNode.setFreq(x.second);
+        queue.push(newNode);
     }
-    this->root = &nodes[0];
-    cout << "Hoffman tree built with the root in value " << this->root->number_of_value() << "\n";
+
+    while(!queue.empty()) {
+        //cout << queue.top().getData() << "\n";
+
+        if(queue.size() == 1) {
+            buff[buffCount] = queue.top();
+            root = &buff[buffCount];
+            break;
+        }
+
+        buff[buffCount] = queue.top();
+        //cout << buff[buffCount].getFreq() << " - " <<buff[buffCount].getData() << "\n";
+        buffCount++; //+1
+        queue.pop();
+
+        buff[buffCount] = queue.top();
+        //cout << buff[buffCount].getFreq() << " - " <<buff[buffCount].getData() << "\n";
+        buffCount++; //+1
+        queue.pop();
+
+        Node newNode(&buff[buffCount-2], &buff[buffCount-1]);
+        //cout << "\t" <<newNode.getFreq() << " - " <<newNode.getData() << "\n";
+        queue.push(newNode);
+
+    }
+
 }
 
-void HoffmanTree::inorderWalk() {
-    inorderWalking(this->root, "");
-    cout << "--->" << dict['b'] << "\n";
+
+
+void HoffmanTree::inorderWalk(Node* node, string code) {
+
+    if(node) {
+        inorderWalk(node->getLeft(), code + "0");
+        if(node->getLeft() == nullptr && node->getRight() == nullptr) {
+            dict[node->getFreq()] = code;
+            cout << (char)node->getData() << " - " << node->getFreq() << " - " << code <<"\n";
+        }
+        inorderWalk(node->getRight(), code + "1");
+    }
+
 }
-
-
-// void HoffmanTree::printTree(Node* node) {
-//     cout << "fgfdg";
-//     if (node == nullptr) {
-//         return;
-//     }
-//     // First recur on left subtree
-//     printTree(node->getLeft());
-//
-//     // Now deal with the node
-//     cout << node->number_of_freq() << " ";
-//
-//     // Then recur on right subtree
-//     printTree(node->getRight());
-// }
-
