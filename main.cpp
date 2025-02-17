@@ -5,10 +5,7 @@ using std::cout;
 using std::cin;
 
 int main() {
-    HoffmanTree hTree;
-    hTree.buildHoffmanTree("input.txt");
-
-    //cout << hTree.getTree().getLeft()->getLeft()->getLeft()->number_of_value() << "\n";
+    HoffmanTree hTree("input.txt");
 
     hTree.inorderWalk(hTree.getRoot(), "");
 

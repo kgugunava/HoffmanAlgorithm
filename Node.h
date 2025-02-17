@@ -6,36 +6,52 @@
 class Node {
 public:
 	Node() {
-		char data = 0;
-		Node* left = nullptr;
-		Node* right = nullptr;
-		int freq = 0;
+		data = '\0';
+		left = nullptr;
+		right = nullptr;
+		freq = 0;
 	}
 
 	Node(char value, int f) {
 		data = value;
 		freq = f;
-		Node* left = nullptr;
-		Node* right = nullptr;
+		left = nullptr;
+		right = nullptr;
 	}
+
+	Node(Node* one, Node* two) {
+		freq = one->getFreq() + two->getFreq();
+		data = '\0';
+		left = one;
+		right = two;
+	}
+
+	Node(const Node& ref) {
+		this->data = ref.getData();
+		this->freq = ref.getFreq();
+		this->left = ref.left;
+		this->right = ref.right;
+	}
+
+	void addFreq(){freq++;};
 
 	//геттеры
 	Node* getLeft()const{return left;}
 	Node* getRight()const{return right;}
-	int getData()const {return data;}
+	char getData()const {return data;}
 	int getFreq()const{return freq;}
 
 	//сеттеры
 	void setLeft(Node* l){left = l;}
 	void setRight(Node* r){right = r;}
-	void setData(int d){data = d;}
+	void setData(char d){data = d;}
 	void setFreq(int f){freq = f;}
 
 private:
-	char data = 0;
-	Node* left = nullptr;
-	Node* right = nullptr;
-	int freq = 0;
+	char data;
+	Node* left;
+	Node* right;
+	int freq;
 };
 
 
