@@ -3,34 +3,35 @@
 
 class Node {
 public:
-	Node();
+    Node();
 
-	Node(int freq, unsigned char value);
+    Node(int freq, unsigned char value);
 
-	void add_number(unsigned char value);
+    void add_number(unsigned char value);
 
-	int number_of_freq() const;
+    int number_of_freq() const;
 
-	char number_of_value() const;
+    char number_of_value() const;
 
-	void setParent(Node* node);
+    void setParent(Node *node);
 
-	void setLeft(Node* node);
+    void setLeft(Node *node);
 
-	void setRight(Node* node);
+    void setRight(Node *node);
 
-	void setFreq(int value);
-	Node* getLeft()const;
-	Node* getRight()const;
+    void setFreq(int value);
+
+    Node *getLeft() const;
+
+    Node *getRight() const;
 
 private:
-	Node* right;
-	Node* left;
-	Node* parent;
-	int freq;
-	unsigned char symb;
+    Node *right;
+    Node *left;
+    Node *parent;
+    int freq;
+    unsigned char symb;
 };
-
 
 
 #endif Node_H

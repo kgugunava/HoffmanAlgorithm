@@ -9,13 +9,19 @@ using namespace std;
 
 class HoffmanTree {
 public:
-    void buildHoffmanTree(const char* text);
+    void buildHoffmanTree(const char *text);
 
     void inorderWalk();
 
+    void printTree(Node* node);
+
+    Node* getRoot() {
+        return this->root;
+    }
+
 private:
     vector<Node> nodes;
-    Node* root = nullptr;
+    Node *root = nullptr;
 };
 
 
