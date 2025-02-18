@@ -1,10 +1,11 @@
 #include "HoffmanTree.h"
 #include "Node.h"
+#include "benchmark.h"
 #include <iostream>
 #include <map>
 #include <queue>
 
-#define BUFF_SIZE 256
+#define BUFF_SIZE 10000
 
 vector<Node> allNodes;
 Node buff[BUFF_SIZE];
@@ -49,7 +50,7 @@ HoffmanTree::HoffmanTree(const char* filename) {
         newNode.setFreq(x.second);
         queue.push(newNode);
     }
-
+//making tree
     while(!queue.empty()) {
         //cout << queue.top().getData() << "\n";
 
