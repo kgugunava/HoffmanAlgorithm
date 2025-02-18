@@ -1,13 +1,12 @@
 #include <iostream>
+
+#include "BMPImages.h"
 #include "HoffmanTree.h"
 
 using std::cout;
 using std::cin;
 
 int main() {
-    HoffmanTree hTree("input.txt");
-
-    hTree.inorderWalk(hTree.getRoot(), "");
-
-    return 0;
+    Image img;
+    img.imageProcessing("gorilla.bmp");
 }
