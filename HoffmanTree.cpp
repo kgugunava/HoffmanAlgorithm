@@ -75,7 +75,7 @@ HoffmanTree::HoffmanTree(const char* filename) {
         queue.push(newNode);
 
     }
-
+    buffCount = 0;
 }
 
 
