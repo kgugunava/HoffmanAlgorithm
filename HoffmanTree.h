@@ -10,11 +10,11 @@ using namespace std;
 
 class HoffmanTree {
 public:
-    HoffmanTree(const char* fileName);
+    HoffmanTree(string fileName);
 
     void inorderWalk(Node* node, string code);
 
-    void makeMap(const char* filename);
+    void makeMap(string filename);
 
     Node* getRoot()const{return root;}
 

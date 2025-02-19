@@ -23,11 +23,11 @@ struct Comp {
     }
 };
 
-HoffmanTree::HoffmanTree(const char *filename) {
+HoffmanTree::HoffmanTree(string filename) {
     priority_queue<Node, vector<Node>, Comp> queue;
 
 
-    FILE *fr = fopen(filename, "rb");
+    FILE *fr = fopen(filename.c_str(), "rb");
     if (!fr)
         return;
 
@@ -52,8 +52,6 @@ HoffmanTree::HoffmanTree(const char *filename) {
     }
     //making tree
     while (!queue.empty()) {
-        //cout << queue.top().getData() << "\n";
-
         if (queue.size() == 1) {
             buff[buffCount] = queue.top();
             root = &buff[buffCount];
@@ -61,17 +59,13 @@ HoffmanTree::HoffmanTree(const char *filename) {
         }
 
         buff[buffCount] = queue.top();
-        //cout << buff[buffCount].getFreq() << " - " <<buff[buffCount].getData() << "\n";
         buffCount++; //+1
         queue.pop();
-
         buff[buffCount] = queue.top();
-        //cout << buff[buffCount].getFreq() << " - " <<buff[buffCount].getData() << "\n";
         buffCount++; //+1
         queue.pop();
 
         Node newNode(&buff[buffCount - 2], &buff[buffCount - 1]);
-        //cout << "\t" <<newNode.getFreq() << " - " <<newNode.getData() << "\n";
         queue.push(newNode);
     }
     buffCount = 0;
@@ -82,21 +76,19 @@ void HoffmanTree::inorderWalk(Node *node, string code) {
         inorderWalk(node->getLeft(), code + "0");
         if (node->getLeft() == nullptr && node->getRight() == nullptr) {
             dict[node->getData()] = code;
-            // cout << (char) node->getData() << " - " << node->getFreq() << " - " << code << "\n";
         }
         inorderWalk(node->getRight(), code + "1");
     }
 }
 
-void HoffmanTree::makeMap(const char* filename) {
+void HoffmanTree::makeMap(string filename) {
     ofstream out;
     out.open(filename);
     if (out.is_open()) {
-        for (auto x : dict) {
+        for (auto x: dict) {
             out << x.first << " " << x.second << "\n";
         }
         out << "*";
     }
     out.close();
 }
-

@@ -21,11 +21,11 @@ typedef union bit2char {
     } mbit;
 } BIT2CHAR;
 
-void writing_to_file(char *filein, char *fileout, map<unsigned char, string> dict);
+void writing_to_file(string filein, string fileout, map<unsigned char, string> dict);
 
 void convert_byte_to_str(string &in, char *res, int len);
 
-void getMapForDecodingFromFile(const char* filename);
+void getMapForDecodingFromFile(string filename);
 
 string getOutputFileName(string inputFileName);
 

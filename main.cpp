@@ -5,9 +5,10 @@
 using namespace std;
 
 int main() {
-    HoffmanTree hTree("input.txt");
+    string inputFileName = "image-lion.bmp";
+    HoffmanTree hTree(inputFileName);
     hTree.inorderWalk(hTree.getRoot(), "");
     hTree.makeMap("outputMap.txt");
     getMapForDecodingFromFile("outputMap.txt");
-    cout << getOutputFileName("input.txt");
+    cout << getOutputFileName(inputFileName);
 }
