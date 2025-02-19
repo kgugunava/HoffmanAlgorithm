@@ -1,2 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+HoffmanTree.cpp merge=ours
+main.cpp merge=ours
+Node.cpp merge=ours
+HoffmanTree.h merge=ours
+Node.h merge=ours
+.gitignore merge=ours
+CMakeLists.txt merge=ours

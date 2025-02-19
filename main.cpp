@@ -7,6 +7,7 @@ using std::cout;
 using std::cin;
 
 int main() {
-    HoffmanTree hTree("image-lion.bmp");
+    HoffmanTree hTree("input.txt");
     hTree.inorderWalk(hTree.getRoot(), "");
+    hTree.makeMap("ouputMap.txt");
 }

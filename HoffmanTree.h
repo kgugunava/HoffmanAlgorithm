@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Node.h"
+#include <map>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ public:
     HoffmanTree(const char* fileName);
 
     void inorderWalk(Node* node, string code);
+
+    void makeMap(const char* filename);
 
     Node* getRoot()const{return root;}
 
