@@ -1,9 +1,9 @@
 #include "HoffmanTree.h"
 #include "Node.h"
-#include "benchmark.h"
 #include <iostream>
 #include <map>
 #include <queue>
+#include "benchmark.h"
 
 #define BUFF_SIZE 10000
 
@@ -15,7 +15,6 @@ map<unsigned char, string> dict; // coding dictionary
 
 using namespace std;
 
-
 struct Comp {
     bool operator()(const Node& a, const Node& b) {
         return a.getFreq() > b.getFreq();
@@ -23,6 +22,8 @@ struct Comp {
 };
 
 HoffmanTree::HoffmanTree(const char* filename) {
+
+    startSpace(filename);
 
     priority_queue<Node, vector<Node>, Comp>queue;
 
@@ -43,6 +44,8 @@ HoffmanTree::HoffmanTree(const char* filename) {
     for (int i = 0; i < length; i++) {
         freqOfSymbol[fgetc(fr)] += 1;
     }
+
+    fclose(fr);
 
     for (auto x : freqOfSymbol) {
         Node newNode;
@@ -76,6 +79,7 @@ HoffmanTree::HoffmanTree(const char* filename) {
 
     }
     buffCount = 0;
+
 }
 
 
@@ -85,8 +89,8 @@ void HoffmanTree::inorderWalk(Node* node, string code) {
     if(node) {
         inorderWalk(node->getLeft(), code + "0");
         if(node->getLeft() == nullptr && node->getRight() == nullptr) {
-            dict[node->getFreq()] = code;
-            cout << (char)node->getData() << " - " << node->getFreq() << " - " << code <<"\n";
+            dict[node->getData()] = code;
+            //cout << (char)node->getData() << " - " << node->getFreq() << " - " << code <<"\n";
         }
         inorderWalk(node->getRight(), code + "1");
     }

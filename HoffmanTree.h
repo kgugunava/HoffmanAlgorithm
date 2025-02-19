@@ -2,7 +2,6 @@
 #define HOFFMANTREE_H
 #include <iostream>
 #include <string>
-#include <vector>
 #include "Node.h"
 
 using namespace std;
