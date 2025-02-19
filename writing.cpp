@@ -7,6 +7,31 @@
 #define BIT8 8
 using namespace std;
 
+map<string, char> dictForDecoding;
+
+void getMapForDecodingFromFile(const char* filename) {
+	ifstream in(filename);
+	string currentLine;
+	if (in.is_open()) {
+		while (getline(in, currentLine)) {
+			if (currentLine == "*") { // конец мапы
+				return;
+			}
+			int whereSpaceWas;
+			for (int i = 0; i < currentLine.size(); i++) {
+				if (currentLine[i] == ' ') {
+					whereSpaceWas = i;
+					break;
+				}
+			}
+			string codeForSymbol = currentLine.substr(whereSpaceWas + 1, currentLine.size() - 2);
+			int symbolInInteger = atoi(currentLine.substr(0, whereSpaceWas).c_str());
+			dictForDecoding[codeForSymbol] = (char)symbolInInteger;
+			cout << codeForSymbol << " : " << dictForDecoding[codeForSymbol] << "\n";
+		}
+	}
+}
+
 void writing_to_file(char* filein, char* fileout, map<unsigned char, string> dict)
 {
 	string linein;
@@ -54,4 +79,11 @@ void convert_byte_to_str( string& in,char *res,int len)
 		res[i] = symb.symb;
 	}
 	return;
+}
+
+string getOutputFileName(string inputFileName) {
+	string outputFileName = "encodedFile";
+	string extension = inputFileName.substr(inputFileName.size() - 4, 4);
+	outputFileName += extension;
+	return outputFileName;
 }

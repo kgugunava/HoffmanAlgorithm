@@ -12,7 +12,7 @@ vector<Node> allNodes;
 Node buff[BUFF_SIZE];
 int buffCount = 0;
 
-map<unsigned char, string> dict; // coding dictionary
+map<int, string> dict; // coding dictionary
 
 using namespace std;
 
