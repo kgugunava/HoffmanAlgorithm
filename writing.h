@@ -20,8 +20,9 @@ typedef union bit2char {
 	}mbit;
 }BIT2CHAR;
 
-void writing_to_file(char* filein, char* fileout,map<unsigned char,string> dict);
+void encoding_file(char* filein, char* fileout,map<unsigned char,string> dict);
+void decoding_file(char* filein, char* fileout, map<unsigned char, string> dict);
 
-void convert_byte_to_str( string& in,char *res,int len);
+void convert_byte_to_str( string& in,char *res);
 
 #endif

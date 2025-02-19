@@ -18,8 +18,9 @@ int main() {
 
     return 0;*/
     map<unsigned char, string> dict;
-    dict['Q'] = "1000";
-    dict['w'] = "1001";
+    dict['q'] = "000000";
+    dict['f'] = "0011";
+    dict['w'] = "100";
     dict['e'] = "1010";
     dict['r'] = "1011";
     dict['t'] = "1100";
@@ -28,5 +29,5 @@ int main() {
     dict['\n'] = "1111";
 
 
-    writing_to_file("input.txt", "output.txt",dict);
+    encoding_file("input.txt", "output.txt",dict);
 }
