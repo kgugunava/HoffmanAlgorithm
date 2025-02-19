@@ -7,6 +7,6 @@ using std::cout;
 using std::cin;
 
 int main() {
-    Image img;
-    img.imageProcessing("gorilla.bmp");
+    HoffmanTree hTree("image-lion.bmp");
+    hTree.inorderWalk(hTree.getRoot(), "");
 }
