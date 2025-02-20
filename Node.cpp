@@ -14,14 +14,14 @@ Node::Node(char value, int f) {
     right = nullptr;
 }
 
-Node::Node(Node *one, Node *two) {
+Node::Node(Node* one, Node* two) {
     freq = one->getFreq() + two->getFreq();
     data = '\0';
     left = one;
     right = two;
 }
 
-Node::Node(const Node &ref) {
+Node::Node(const Node& ref) {
     this->data = ref.getData();
     this->freq = ref.getFreq();
     this->left = ref.left;
@@ -48,11 +48,11 @@ int Node::getFreq() const {
     return freq;
 }
 
-void Node::setLeft(Node *l) {
+void Node::setLeft(Node* l) {
     left = l;
 }
 
-void Node::setRight(Node *r) {
+void Node::setRight(Node* r) {
     right = r;
 }
 
