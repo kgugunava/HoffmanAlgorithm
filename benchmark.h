@@ -1,6 +1,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #ifndef BENCHMARK_H
 #define BENCHMARK_H
@@ -9,6 +10,7 @@
 
 void startTests(std::string files[5], int size, std::string logs);
 
+int findAverageTimeForTXT(std::string files[5], int size, std::string logsFileName);
 
 void startSpace(std::string fileName, std::string logs);
 

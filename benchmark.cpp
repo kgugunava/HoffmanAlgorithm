@@ -1,13 +1,24 @@
 #include "benchmark.h"
 #include <chrono>
 #include <fstream>
-#include <iostream>
+#include <numeric>
+#include <vector>
 
 #include "writing.h"
 #include "HoffmanTree.h"
 
 
 using namespace std;
+
+// int findAverageTimeForTXT(string files[5], int size, string secs) {
+//     vector<int> times;
+//     int secsInInt = stoi(secs);
+//     times.push_back(secsInInt);
+//     int averageTime = accumulate(times.begin(), times.end(), 0) / times.size();
+//     return averageTime;
+// }
+
+vector<int> allSeconds;
 
 void printSpaceAndTime(string fileName, string logsFileName, chrono::time_point<chrono::high_resolution_clock> start) {
     FILE *file = fopen(fileName.c_str(), "rb");
@@ -22,6 +33,8 @@ void printSpaceAndTime(string fileName, string logsFileName, chrono::time_point<
 
     string milSecs = to_string(duration.count()); // in millisecinds
     string secs = to_string(sec.count()); // time in seconds
+    int secsInInt = stoi(secs);
+    allSeconds.push_back(secsInInt);
 
     ofstream out(logsFileName, std::ios::app); // open for writing with saved before part
     if (!out.is_open())
@@ -31,14 +44,12 @@ void printSpaceAndTime(string fileName, string logsFileName, chrono::time_point<
     out << "Memory: " + size + "\n";
     out << "Seconds: " + secs + "\n";
     out << "MilliSeconds: " + milSecs + "\n\n\n";
-    out.close();
 }
 
 
 void startTests(string files[5], int size, string logs) {
     ofstream out;
     out.open(logs);
-    out.close();
     for (int i = 0; i < size; ++i) {
         auto start = startTime();
         // HoffmanTree test(files[i]);
@@ -55,6 +66,13 @@ void startTests(string files[5], int size, string logs) {
 
         printSpaceAndTime(files[i], logs, start);
     }
+    int averageTime = accumulate(allSeconds.begin(), allSeconds.end(), 0) / allSeconds.size();
+    out << "Average Time: %d\n" + averageTime;
+    out.close();
+}
+
+std::chrono::time_point<std::chrono::high_resolution_clock> startTime() {
+    return std::chrono::high_resolution_clock::now();
 }
 
 // void startSpace(std::string fileName, std::string logs) {
@@ -87,11 +105,6 @@ void startTests(string files[5], int size, string logs) {
 // }
 
 
-std::chrono::time_point<std::chrono::high_resolution_clock> startTime() {
-    return std::chrono::high_resolution_clock::now();
-}
-
-
 // void duration(std::chrono::time_point<std::chrono::high_resolution_clock> start, string logs, string file) {
 //     auto end = std::chrono::high_resolution_clock::now(); // end of program
 //     auto sec = chrono::duration_cast<std::chrono::seconds>(end - start); // sec's
@@ -113,5 +126,3 @@ std::chrono::time_point<std::chrono::high_resolution_clock> startTime() {
 //     std::cout << "Time taken by function: " << milli << " milliseconds" << std::endl;
 //     std::cout << "Time taken by function: " << secs << " seconds" << std::endl;
 // }
-
-
