@@ -23,8 +23,8 @@ typedef union bit2char {
 
 void encoding_file(string filein, string fileout,map<int,string> dict);
 void decoding_file(string filein, string fileout, map< string, unsigned char> dict);
-void convert_for_decode(map<string, unsigned char> dict, BIT2CHAR* symb, string& in);
-void convert_byte_to_str( string& in,char *res);
+void convert_for_decode(char symbol, string& in, BIT2CHAR* symb);
+void convert_byte_to_str(char* in, char& out);
 
 void getMapForDecodingFromFile(string filename, map<string, unsigned char> &dictForDecoding);
 

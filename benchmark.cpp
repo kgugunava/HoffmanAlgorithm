@@ -16,16 +16,14 @@ void startTests(const char **files, int size, const char* logs) {
     out.close();
     for(int i = 0; i < size; ++i) {
         auto start = startTime();
-        HoffmanTree test(files[i]);
-        test.inorderWalk(test.getRoot(),"");
         HoffmanTree hTree(files[i]);
         hTree.inorderWalk(hTree.getRoot(), "");
         map<string, unsigned char> dictForDecoding;
-        hTree.makeMap("outputMap.txt");
+        hTree.makeMap("resource/outputMap.txt");
 
-        getMapForDecodingFromFile("outputMap.txt", dictForDecoding);
-        encoding_file(files[i], "output.txt", get_map());
-        decoding_file("output.txt", "output2.txt", dictForDecoding);
+        getMapForDecodingFromFile("resource/outputMap.txt", dictForDecoding);
+        encoding_file(files[i], "resource/output.txt", get_map());
+        decoding_file("resource/output.txt", "resource/output2.txt", dictForDecoding);
         duration(start);
     }
 
@@ -54,8 +52,8 @@ void startSpace(std::string fileName, std::string logs) {
     out << "\tLogs for " + fileName +  ":\n";
     out << "Space before:\t" + size + " bytes\n";
 
-    cout << "\tLogs for " + fileName +  ":\n";
-    cout << "Space before:\t" + size + " bytes\n";
+    //cout << "\tLogs for " + fileName +  ":\n";
+    //cout << "Space before:\t" + size + " bytes\n";
 
     fclose(file);
     out.close();
@@ -85,8 +83,8 @@ void duration(std::chrono::time_point<std::chrono::high_resolution_clock> start,
 
     out.close();
 
-    std::cout << "Time taken by function: " << milli << " milliseconds" << std::endl;
-    std::cout << "Time taken by function: " << secs << " seconds" << std::endl;
+    //std::cout << "Time taken by function: " << milli << " milliseconds" << std::endl;
+    //std::cout << "Time taken by function: " << secs << " seconds" << std::endl;
 
 
 }
