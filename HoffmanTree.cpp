@@ -90,7 +90,7 @@ void HoffmanTree::inorderWalk(Node* node, string code) {
         inorderWalk(node->getLeft(), code + "0");
         if(node->getLeft() == nullptr && node->getRight() == nullptr) {
             dict[node->getData()] = code;
-            //cout << (char)node->getData() << " - " << node->getFreq() << " - " << code <<"\n";
+            cout << (char)node->getData() << " -  - " << code <<"\n";
         }
         inorderWalk(node->getRight(), code + "1");
     }

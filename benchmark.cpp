@@ -18,7 +18,7 @@ void startTests(const char **files, int size, const char* logs) {
         auto start = startTime();
         HoffmanTree test(files[i]);
         test.inorderWalk(test.getRoot(),"");
-
+        cout <<  "\n\tNew Code\n\n\n";
         duration(start);
     }
 

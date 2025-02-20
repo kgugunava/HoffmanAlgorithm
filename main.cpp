@@ -10,9 +10,9 @@ using namespace std;
 
 int main() {
 
-    const char ** test = new const char*[]{"point.bmp", "input.txt", "war.txt"};
+    const char ** test = new const char*[]{"point.bmp"};
 
-    //startTests(test,  3);
+    startTests(test,  1);
 
 //encoding
     map<char, string> dict_for_encode;
