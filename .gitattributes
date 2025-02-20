@@ -5,5 +5,7 @@ main.cpp merge=ours
 Node.cpp merge=ours
 HoffmanTree.h merge=ours
 Node.h merge=ours
+writing.h
+writing.cpp
 .gitignore merge=ours
 CMakeLists.txt merge=ours
