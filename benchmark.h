@@ -1,19 +1,20 @@
 #include <chrono>
 #include <iostream>
+#include <string>
 
 #ifndef BENCHMARK_H
 #define BENCHMARK_H
 
 #define Logs "Logs.txt"
 
-void startTests(const char** files, int size, const char * logs = Logs);
+void startTests(std::string files[5], int size, std::string logs);
 
 
-void startSpace(std::string fileName, std::string logs = Logs);
+void startSpace(std::string fileName, std::string logs);
 
 std::chrono::time_point<std::chrono::high_resolution_clock> startTime();
 
-void duration(std::chrono::time_point<std::chrono::high_resolution_clock> start, const char * logs = Logs);
+void duration(std::chrono::time_point<std::chrono::high_resolution_clock> start, std::string logs, std::string file);
 
 
 
