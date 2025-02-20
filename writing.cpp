@@ -78,29 +78,30 @@ void decoding_file(string filein, string fileout, map<string, unsigned char> dic
 				symb.symb = linein[i];
 				convert_for_decode(dict, &symb, in);
 			}
-			cout << "read line";
-			int len;
-			if (tail - '0') {
-				len = in.length() - BIT8 + (tail - '0');
-			}
-			else {
-				len = in.length();
-			}
 			
-			int i = 0;//end;
-			int st = 0;
-			string buff = "";
-			string lineout = "";
-			while (i != len) {
-				buff.push_back(in[i]);
-				if (dict[buff]) {
-					lineout.push_back(dict[buff]);
-					buff = "";
-				}
-				++i;
-			}
-			fw << lineout;
 		}
+		cout << "read line";
+		int len;
+		if (tail - '0') {
+			len = in.length() - BIT8 + (tail - '0');
+		}
+		else {
+			len = in.length();
+		}
+
+		int i = 0;//end;
+		int st = 0;
+		string buff = "";
+		string lineout = "";
+		while (i != len) {
+			buff.push_back(in[i]);
+			if (dict[buff]) {
+				lineout.push_back(dict[buff]);
+				buff = "";
+			}
+			++i;
+		}
+		fw << lineout;
 		
 		
 		

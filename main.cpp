@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
    
-    string inputFileName = "mir.txt";
+    string inputFileName = "test.txt";
     HoffmanTree hTree(inputFileName);
     hTree.inorderWalk(hTree.getRoot(), "");
     map<string, unsigned char> dictForDecoding;
