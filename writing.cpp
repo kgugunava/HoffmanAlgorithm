@@ -7,9 +7,11 @@
 #define BIT8 8
 using namespace std;
 
-void encoding_file(string filein, string fileout, map<unsigned char, string> dict)
+
+
+void encoding_file(string filein, string fileout, map< int, string> dict)
 {
-	
+	cout << "ENCODE" << "\n";
 	string linein;
 	
 	ifstream fr;
@@ -17,39 +19,39 @@ void encoding_file(string filein, string fileout, map<unsigned char, string> dic
 	
 	fr.open(filein, ios::binary | ios::in);
 	fw.open(fileout, ios::binary | ios::out);
+	fw << " ";
+	string linebyte;
 	if (fr.is_open()) {
 		while (getline(fr, linein)) {
-			cout << linein << endl;
-			string linebyte;
+			
+			//cout << linein << endl;
+			
 			for (int i = 0;i < linein.length();i++) {
 				linebyte += dict[linein[i]];
 			}
-			int len = linebyte.length() / BIT8;
-			if (linebyte.length() % BIT8 ) {
-				len += 1;
-			}
-			/*cout << len<<"\n";
-			cout << linebyte<<endl;*/
-			if (len) {
-				char* out;
-				out = new char[len] {0};
-				cout << "->1 " << out[0] << "-" << out[1] << endl;
-				convert_byte_to_str(linebyte, out);
-				cout << "->" << out[0] << "-" << out[1] << endl;
-				fw.write(out, len);
-				/*for (int i = 0;i < len;i++) {
-					fw.put(out[i]);
-				}
-				fw << "\n";*/
-				fw << "\n";
-				delete[] out;
-				out = nullptr;
-			}
-			else {
-				fw << "\n";
-			}
-
 		}
+
+		int len = linebyte.length() / BIT8;
+		if (linebyte.length() % BIT8) {
+			len += 1;
+		}
+		//cout << len<<"\n";
+		//cout << linebyte<<endl;
+		char* out;
+		out = new char[len] {0};
+		//cout << "->1 " << out[0] << "-" << out[1] << endl;
+		convert_byte_to_str(linebyte, out);
+		//cout << "->" << out[0] << "-" << out[1] << endl;
+		fw.write(out, len);
+		/*for (int i = 0;i < len;i++) {
+			fw.put(out[i]);
+		}
+		fw << "\n";*/
+		//fw << "\n";
+		delete[] out;
+		out = nullptr;
+		fw.seekp(0);
+		fw << linebyte.length() % BIT8;
 	}
 	fr.close();
 	fw.close();
@@ -66,37 +68,42 @@ void decoding_file(string filein, string fileout, map<string, unsigned char> dic
 	fr.open(filein, ios::binary | ios::in);
 	fw.open(fileout, ios::binary | ios::out);
 	if (fr.is_open()) {
+
+		char tail = fr.get();
+		string in;
+		
 		while (getline(fr, linein)) {
-			cout << linein<<endl;
-			string lineout;
-			string in;
 			for (int i = 0;i < linein.length();i++) {
-				
 				BIT2CHAR symb;
 				symb.symb = linein[i];
-				
-				char symbol;
-				convert_for_decode(dict, &symb, in, symbol);
-
-
+				convert_for_decode(dict, &symb, in);
 			}
-			cout << in << "\n";
+			cout << "read line";
+			int len;
+			if (tail - '0') {
+				len = in.length() - BIT8 + (tail - '0');
+			}
+			else {
+				len = in.length();
+			}
+			
+			int i = 0;//end;
 			int st = 0;
-			for (int i = 0;i < in.length();i++) {
-				if(dict[in.substr(st,i-st)]){
-					//fw.put(dict[in.substr(st, i - st)]);
-					lineout += dict[in.substr(st,i - st)];
-					st = i;
+			string buff = "";
+			string lineout = "";
+			while (i != len) {
+				buff.push_back(in[i]);
+				if (dict[buff]) {
+					lineout.push_back(dict[buff]);
+					buff = "";
 				}
+				++i;
 			}
-			if (dict[in.substr(st, in.length() - st)]) {
-				cout << dict[in.substr(st, in.length() - st)];
-				//fw.put(dict[in.substr(st, in.length() - st)]);
-				lineout += dict[in.substr(st, in.length() - st)];
-			}
-
-			fw << lineout << "\n";
+			fw << lineout;
 		}
+		
+		
+		
 	}
 	fr.close();
 	fw.close();
@@ -104,16 +111,17 @@ void decoding_file(string filein, string fileout, map<string, unsigned char> dic
 
 }
 
-void convert_for_decode(map<string, unsigned char> dict,BIT2CHAR * symb,string& in,char& symbol)
+void convert_for_decode(map<string, unsigned char> dict,BIT2CHAR * symb,string& in)
 {
-	in += to_string((char)symb->mbit.b1);
-	in += to_string((char)symb->mbit.b2);
-	in += to_string((char)symb->mbit.b3);
-	in += to_string((char)symb->mbit.b4);
-	in += to_string((char)symb->mbit.b5);
-	in += to_string((char)symb->mbit.b6);
-	in += to_string((char)symb->mbit.b7);
-	in += to_string((char)symb->mbit.b8);
+	int len = in.length();
+	in.insert(len,to_string((char)symb->mbit.b1));
+	in.insert(len+1, to_string((char)symb->mbit.b2));
+	in.insert(len+2, to_string((char)symb->mbit.b3));
+	in.insert(len+3, to_string((char)symb->mbit.b4));
+	in.insert(len+4, to_string((char)symb->mbit.b5));
+	in.insert(len+5, to_string((char)symb->mbit.b6));
+	in.insert(len+6, to_string((char)symb->mbit.b7));
+	in.insert(len+7, to_string((char)symb->mbit.b8));
 
 }
 
@@ -145,5 +153,35 @@ void convert_byte_to_str(string& in, char* res)
 	return;
 }
 
+string getOutputFileName(string inputFileName) {
+	string outputFileName = inputFileName.substr(0, inputFileName.size() - 4) + "-encoded";
+	string extension = inputFileName.substr(inputFileName.size() - 4, 4);
+	outputFileName += extension;
+	return outputFileName;
+}
+
+void getMapForDecodingFromFile(string filename, map<string, unsigned char> &dictForDecoding) {
+	ifstream in(filename);
+	string currentLine;
+	if (in.is_open()) {
+		while (getline(in, currentLine)) {
+			if (currentLine == "*") {
+				// конец мапы
+				return;
+			}
+			int whereSpaceWas;
+			for (int i = 0; i < currentLine.size(); i++) {
+				if (currentLine[i] == ' ') {
+					whereSpaceWas = i;
+					break;
+				}
+			}
+			string codeForSymbol = currentLine.substr(whereSpaceWas + 1, currentLine.size() - 2);
+			int symbolInInteger = atoi(currentLine.substr(0, whereSpaceWas).c_str());
+			dictForDecoding[codeForSymbol] = (char)symbolInInteger;
+			// cout << codeForSymbol << " : " << dictForDecoding[codeForSymbol] << "\n";
+		}
+	}
+}
 
 

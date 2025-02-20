@@ -22,5 +22,6 @@ private:
     Node* root;
 };
 
+map<int, string>& get_map();
 
 #endif //HOFFMANTREE_H

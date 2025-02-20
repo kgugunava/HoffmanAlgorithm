@@ -17,6 +17,9 @@ map<int, string> dict; // coding dictionary
 using namespace std;
 
 
+map<int, string>& get_map() {
+    return dict;
+}
 struct Comp {
     bool operator()(const Node &a, const Node &b) {
         return a.getFreq() > b.getFreq();
