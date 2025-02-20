@@ -1,4 +1,4 @@
-#include <benchmark.h>
+#include "benchmark.h"
 #include <iostream>
 #include "writing.h"
 #include "HoffmanTree.h"
@@ -11,8 +11,9 @@ using namespace std;
 
 
 int main() {
-   
-    string inputFileName = "test.txt";
+    const char** test = new const char*{ "mir.txt" };
+    startTests(test,1);
+    string inputFileName = "mir.txt";
     HoffmanTree hTree(inputFileName);
     hTree.inorderWalk(hTree.getRoot(), "");
     map<string, unsigned char> dictForDecoding;

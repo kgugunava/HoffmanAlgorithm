@@ -1,6 +1,6 @@
 #include "HoffmanTree.h"
 #include "Node.h"
-// #include "benchmark.h"
+#include "benchmark.h"
 #include <iostream>
 #include <map>
 #include <queue>
@@ -27,6 +27,7 @@ struct Comp {
 };
 
 HoffmanTree::HoffmanTree(string filename) {
+    startSpace(filename);
     priority_queue<Node, vector<Node>, Comp> queue;
 
 

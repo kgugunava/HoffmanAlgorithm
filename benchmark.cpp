@@ -2,7 +2,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
-
+#include "writing.h"
 #include "HoffmanTree.h"
 
 
@@ -18,7 +18,14 @@ void startTests(const char **files, int size, const char* logs) {
         auto start = startTime();
         HoffmanTree test(files[i]);
         test.inorderWalk(test.getRoot(),"");
+        HoffmanTree hTree(files[i]);
+        hTree.inorderWalk(hTree.getRoot(), "");
+        map<string, unsigned char> dictForDecoding;
+        hTree.makeMap("outputMap.txt");
 
+        getMapForDecodingFromFile("outputMap.txt", dictForDecoding);
+        encoding_file(files[i], "output.txt", get_map());
+        decoding_file("output.txt", "output2.txt", dictForDecoding);
         duration(start);
     }
 
