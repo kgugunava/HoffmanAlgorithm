@@ -9,19 +9,16 @@
 using namespace std;
 
 
-
 int main() {
-    const char** test = new const char* { "resource/test.txt" };
-    startTests(test,1);
-    /*string inputFileName = "resource/mir.txt";
-    HoffmanTree hTree(inputFileName);
-    hTree.inorderWalk(hTree.getRoot(), "");
-    map<string, unsigned char> dictForDecoding;
-    hTree.makeMap("resource/outputMap.txt");
-
-    getMapForDecodingFromFile("resource/outputMap.txt", dictForDecoding);
-    encoding_file(inputFileName,"resource/output.txt", get_map());
-    decoding_file("resource/output.txt", "resource/output2.txt", dictForDecoding);*/
-
-    
+    string files[4] = {"wav-test/wav-test1MB.wav", "wav-test/wav-test2MB.wav", "wav-test/wav-test5MB.wav", "wav-test/wav-test10MB.wav"};
+    startTests(files, 4, "Logs.txt", "output.txt");
+    // string inputFileName = "wav-test/wav-test10MB.wav";
+    // HoffmanTree hTree(inputFileName);
+    // hTree.inorderWalk(hTree.getRoot(), "");
+    // map<string, unsigned char> dictForDecoding;
+    // hTree.makeMap("outputMap.txt");
+    //
+    // getMapForDecodingFromFile("outputMap.txt", dictForDecoding);
+    // encoding_file(inputFileName, "output.txt", get_map());
+    // decoding_file("output.txt", "output2.wav", dictForDecoding);
 }

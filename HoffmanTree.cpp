@@ -27,7 +27,7 @@ struct Comp {
 };
 
 HoffmanTree::HoffmanTree(string filename) {
-    startSpace(filename);
+    // startSpace(filename);
     priority_queue<Node, vector<Node>, Comp> queue;
 
 

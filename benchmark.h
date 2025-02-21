@@ -8,11 +8,11 @@
 
 #define Logs "Logs.txt"
 
-void startTests(std::string files[5], int size, std::string logs);
+void startTests(std::string files[5], int size, std::string logs, std::string encodedFileName);
 
-int findAverageTimeForTXT(std::string files[5], int size, std::string logsFileName);
+// int findAverageTimeForTXT(std::string files[5], int size, std::string logsFileName);
 
-void startSpace(std::string fileName, std::string logs);
+// void startSpace(std::string fileName, std::string logs);
 
 std::chrono::time_point<std::chrono::high_resolution_clock> startTime();
 
