@@ -1,0 +1,2 @@
+	Logs for txt-test-50MB.txt:
+Space before:	51685773 bytes

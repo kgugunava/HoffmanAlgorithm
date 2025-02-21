@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "HoffmanTree.h"
 #include "Node.h"
 #include "benchmark.h"
@@ -48,12 +49,21 @@ HoffmanTree::HoffmanTree(string filename) {
         freqOfSymbol[fgetc(fr)] += 1;
     }
 
+    int count = 0;
+
     for (auto x: freqOfSymbol) {
+        count++;
         Node newNode;
         newNode.setData(x.first);
         newNode.setFreq(x.second);
         queue.push(newNode);
     }
+
+    if(count == 1) {
+        dict[queue.top().getData()] = "1";
+        return;
+    }
+
     //making tree
     while (!queue.empty()) {
         if (queue.size() == 1) {

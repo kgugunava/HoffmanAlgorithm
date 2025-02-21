@@ -12,4 +12,9 @@ add_executable(HoffmanAlgorithm
         HoffmanTree.cpp
         benchmark.cpp
         HoffmanTree.h
+        writing.cpp
+        writing.h
+        BMPImages.cpp
+        BMPImages.h
+        writing.cpp
 )

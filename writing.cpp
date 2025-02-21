@@ -18,7 +18,6 @@ void print_buff(char* buff,int in) {
 void encoding_file(string filein, string fileout, map< int, string> dict)
 {
 	cout << "ENCODE" << "\n";
-	string linein;
 	
 	ifstream fr;
 	ofstream fw;
@@ -77,7 +76,7 @@ void encoding_file(string filein, string fileout, map< int, string> dict)
 			fw.put(out);
 		}
 		fw.seekp(0);
-		fw.put(ind_buff+48);
+		fw.put(static_cast<char>(ind_buff));
 
 	}
 	fr.close();
@@ -174,16 +173,9 @@ void getMapForDecodingFromFile(string filename, map<string, unsigned char> &dict
 	if (in.is_open()) {
 		while (getline(in, currentLine)) {
 			if (currentLine == "*") {
-				// конец мапы
 				return;
 			}
-			int whereSpaceWas;
-			for (int i = 0; i < currentLine.size(); i++) {
-				if (currentLine[i] == ' ') {
-					whereSpaceWas = i;
-					break;
-				}
-			}
+			int whereSpaceWas = currentLine.find(' ');
 			string codeForSymbol = currentLine.substr(whereSpaceWas + 1, currentLine.size() - 2);
 			int symbolInInteger = atoi(currentLine.substr(0, whereSpaceWas).c_str());
 			dictForDecoding[codeForSymbol] = (char)symbolInInteger;

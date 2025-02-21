@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "benchmark.h"
 #include <chrono>
 #include <fstream>
@@ -19,11 +20,10 @@ void startTests(const char **files, int size, const char* logs) {
         HoffmanTree hTree(files[i]);
         hTree.inorderWalk(hTree.getRoot(), "");
         map<string, unsigned char> dictForDecoding;
-        hTree.makeMap("resource/outputMap.txt");
-
-        getMapForDecodingFromFile("resource/outputMap.txt", dictForDecoding);
-        encoding_file(files[i], "resource/output.txt", get_map());
-        decoding_file("resource/output.txt", "resource/output2.txt", dictForDecoding);
+        hTree.makeMap("outputMap.txt");
+        getMapForDecodingFromFile("outputMap.txt", dictForDecoding);
+        encoding_file(files[i], "output.txt", get_map());
+        decoding_file("output.txt", "test_decoded.txt", dictForDecoding);
         duration(start);
     }
 

@@ -5,14 +5,22 @@
 #include <chrono>
 #include <thread>
 #include <map>
-
+#include <fstream>
 using namespace std;
 
 
 
 int main() {
-    const char** test = new const char* { "resource/test.txt" };
+
+
+    const char** test = new const char* { "input.txt" };
+    //const char** test = new const char* { "merl.txt" };
+    //const char** test = new const char* { "wav.wav };
+    //const char** test = new const char* { "input.txt" };
+    //const char** test = new const char* { "input.txt" };
     startTests(test,1);
+
+
     /*string inputFileName = "resource/mir.txt";
     HoffmanTree hTree(inputFileName);
     hTree.inorderWalk(hTree.getRoot(), "");
